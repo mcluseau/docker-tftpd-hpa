@@ -1,0 +1,15 @@
+#! /bin/sh
+img=mcluseau/isc-dhcp-server
+
+set -e
+
+docker build -t $img .
+v=$(docker run --rm $img --version 2>&1 |cut -d- -f3-)
+
+echo "-> version: $v"
+echo "tagging as $img:$v"
+
+docker tag $img $img:$v
+
+docker push $img:$v
+docker push $img
