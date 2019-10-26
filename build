@@ -1,10 +1,10 @@
 #! /bin/sh
-img=mcluseau/isc-dhcp-server
+img=mcluseau/tftpd-hpa
 
 set -e
 
 docker build -t $img .
-v=$(docker run --rm $img --version 2>&1 |cut -d- -f3-)
+v=$(docker run --rm -it --entrypoint apk mcluseau/tftpd-hpa info tftp-hpa -d |head -n 1 |cut -d' ' -f1 |cut -d- -f3-)
 
 echo "-> version: $v"
 echo "tagging as $img:$v"

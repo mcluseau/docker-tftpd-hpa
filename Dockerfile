@@ -1,3 +1,5 @@
 from alpine:3.10.3
-run apk add --update iproute2 dhcp-server-vanilla
-entrypoint ["dhcpd","-d","--no-pid"]
+volume /data
+run apk add --update iproute2 tftp-hpa
+entrypoint ["in.tftpd","--foreground","--listen","--user","nobody"]
+cmd ["--secure","/data"]
